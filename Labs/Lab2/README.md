@@ -1,4 +1,4 @@
-# DATA 419: Topics in Computer Science
+# COSC 419: Topics in Computer Science
 # Fall 2018 - Lab 2
 
 In this lab, we'll be building a basic chat application that uses AJAX calls, the Laravel framework, and an SQLite database to allow people to anonymously chat. A basic scaffold is available through GitHub to start with which you will fill out.
