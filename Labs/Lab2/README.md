@@ -86,7 +86,7 @@ When a user goes to the page at '/chat/$hash', they are essentially joining in o
 
 First, we'll query our DB to get the name of the chatroom that they are joining from the unique identifier:
 
-	```$roomData = DB::table('chatroom')->where('hash', '=', $room)->first();```
+	$roomData = DB::table('chatroom')->where('hash', '=', $room)->first();
 	
 Now, we do something a little fun. We want our users to be anonymous, but able to tell each other apart. So, let's randomly assign them a color and a username when they join. You can use two small arrays, one for colors, and one for usernames, then randomly pick a value from each. Here's some example code:
 
