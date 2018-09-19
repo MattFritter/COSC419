@@ -1,4 +1,4 @@
-# DATA 419: Topics in Computer Science
+# COSC 419: Topics in Computer Science
 # Fall 2018 - Lab 1
 
 In this lab, we'll be installing our web server software stack. This includes the Apache Web server, PHP 7.2, the Laravel PHP framework, and an SQLite database. We will also perform basic configuration of Laravel, the web server, and permissions.
