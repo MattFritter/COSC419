@@ -52,12 +52,12 @@ Our new project should be ready to work on. To confirm, visit your server IP in 
 
 To begin building our backend, we'll need to create a new controller in ```app/Http/Controllers```. This can be done manually as shown in the notes, or by using the following command while in the root of the Laravel project:
 
-```php artisan make:controller ChatController``` *If you get an error saying could not open input file, make sure you're in the correct directory: ```cd /var/www/cosc419```
+	php artisan make:controller ChatController *If you get an error saying could not open input file, make sure you're in the correct directory: ```cd /var/www/cosc419```
 
 We'll need several facades and packages for this lab. In your new Controller file, below the Namespace declaration but before the class declaration, include the following lines:
 
-```use Illuminate\Http\Request;```
-```use Illuminate\Support\Facades\DB;```
+	use Illuminate\Http\Request;
+	use Illuminate\Support\Facades\DB;
 
 The Request package allows us to use the Request object that Laravel uses to pass POST data from the router to the Controller. The DB facade allows us to use Laravel's Query Builder, which is how we're going to interface with out database in this lab.
 
@@ -76,7 +76,7 @@ If it does have a room name, we'll copy that to a variable, then use the PHP ```
 
 Now, we'll store this data in our database using the Query Builder. The files include a new database file, which includes a table called chatroom. This table takes two text inputs: 'name' and 'hash'. The code below performs the insertion.
 
-```DB::table('chatroom')->insert(['name' => $name, 'hash' => $hash]);```
+	DB::table('chatroom')->insert(['name' => $name, 'hash' => $hash]);
 
 Finally, we'll redirect the user to a new page: the page URI should be '/chat/$hash', where $hash is the newly generated identifier we made. Note that in PHP, the string concatenation operator is ```.``` (period).
 
