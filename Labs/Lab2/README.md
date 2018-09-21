@@ -64,7 +64,7 @@ The Request package allows us to use the Request object that Laravel uses to pas
 Now, we are ready to begin writing our functions.
 
 <a name="controller-functions"></a>
-## Controller Functions (8 marks, 2 marks each)
+## ChatController Functions (8 marks, 2 marks each)
 
 # The ```create``` Function
 
