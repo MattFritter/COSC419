@@ -30,7 +30,7 @@ There are many reasons you may want to validate user input - to ensure that form
 
 On your SimpleChat homepage, you have a form that allows the user to create a new chatroom by submitting a name. This name input is called ```roomName```.
 
-In your create() controller, you should be pulling that ```roomName``` value from your Request object. However, we'll add validation for that Request object before we do anything with it.
+In your create() function, you should be pulling that ```roomName``` value from your Request object. However, we'll add validation for that Request object before we do anything with it.
 
 At the beginning of your create() function, call the ```validate([])``` function on your Request object. You want to validate the ```roomName``` input, making sure it meets the following requirements:
 * Is required (must be filled out)
