@@ -64,4 +64,4 @@ Once you've done that, you're ready to write your three queries:
 
 Once you're done, you should check the routes to ensure that they are functioning properly and returning the correct data. Remember, API routes use a URL prefixed by API, i.e.: ```<yourIP>/api/getAll```.
 
-Congratualtions, you're done Lab 3!
+Congratulations, you're done Lab 3!
