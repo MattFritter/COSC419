@@ -30,7 +30,7 @@ There are many reasons you may want to validate user input - to ensure that form
 
 On your SimpleChat homepage, you have a form that allows the user to create a new chatroom by submitting a name. This name input is called ```roomName```.
 
-In your create() controller, you should be pulling that ```roomName``` value from your Request object. However, we'll add validation for that Request object before we do anything with it.
+In your create() function, you should be pulling that ```roomName``` value from your Request object. However, we'll add validation for that Request object before we do anything with it.
 
 At the beginning of your create() function, call the ```validate([])``` function on your Request object. You want to validate the ```roomName``` input, making sure it meets the following requirements:
 * Is required (must be filled out)
@@ -60,7 +60,7 @@ Once you've done that, you're ready to write your three queries:
 
 1. The first query will be for the ```getAll``` route. This query will return the entirety of the ```chat``` database, which is all messages that have been entered. use the ```->toJson()``` QueryBuilder function after your ```->get()``` to return a JSON array, and return this value to the client.
 2. The second query will be for the ```getUser``` route. This query will return only posts from the ```chat``` database that include a specific username, which will be specified in the route as a *parameter*. Like the first query, you should return it as a JSON array and then return the JSON array to the client. (hint: You'll need a where() with a 'like' comparator in it and the '%' characters to wildcard search messages for a username).
-3. Your third query will be for the ```getRooms``` route. This query will return all names and IDs in the ```chatRoom``` table, but will *not* return hashes. Like the previous two, use ```->toJson()``` to convert it to a JSON array and returning that to the client.
+3. Your third query will be for the ```getRooms``` route. This query will return all names in the ```chatRoom``` table, but will *not* return hashes. Like the previous two, use ```->toJson()``` to convert it to a JSON array and returning that to the client.
 
 Once you're done, you should check the routes to ensure that they are functioning properly and returning the correct data. Remember, API routes use a URL prefixed by API, i.e.: ```<yourIP>/api/getAll```.
 
