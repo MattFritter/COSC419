@@ -34,7 +34,7 @@ First, we'll install and enable the Fail2Ban package:
 	
 If you receive an error saying that the Fail2Ban package is not available, double check that you have properly installed ```epel-release``` - refer back to Lab 1 for details.
 
-Now that Fail2Ban is installed, we can configure it. Referring back to the example slide from Lecture 5 and the configuration basics slide, edit the configuration file at ```/etc/fail2ban/jail.local``` to do the following:
+Now that Fail2Ban is installed, we can configure it. Referring back to the example slide from Lecture 5 and the configuration basics slide, create the configuration file ```/etc/fail2ban/jail.local``` to do the following:
 
 * Ban malignant users for ten minutes
 * Use a finding time frame of five minutes
@@ -94,7 +94,7 @@ Rename the ```crs-setup.conf.example``` to ```crs-setup.conf```. Then, go and na
 
 This will load the rulesets and the OWASP configuration file into ModSecurity. Save and close the file, the restart Apache.
 
-If you visit your website now, you'll probably notice that every link now takes you to an error page. This is because ModSecurity rules usually err on the side of being too strict, and something about our requests (quite possibly a session token) is triggering the OWASP rulesets. In order to figure out what's going on, we'll go to ```/etc/conf.d/mod_security.conf```.
+If you visit your website now, you'll probably notice that every link now takes you to an error page. This is because ModSecurity rules usually err on the side of being too strict, and something about our requests (quite possibly a session token) is triggering the OWASP rulesets. In order to figure out what's going on, we'll go to ```/etc/httpd/conf.d/mod_security.conf```.
 
 Find the line that says ```SecRuleEngine On``` near the top of the file. Change this to ```SecRuleEngine DetectionOnly```. Now, ModSecurity will log when rules are broken, but not block or drop the connection.
 
@@ -110,7 +110,7 @@ Then move it to a new filename so that it isn't picked up by the Apache config:
 
 	mv REQUEST-920-PROTOCOL-ENFORCEMENT.conf REQUEST-920-PROTOCOL-ENFORCEMENT.conf.disable
 	
-Now, go back to your ```/etc/conf.d/mod_security.conf```, change the SecRuleEngine back to ```On```, and then restart Apache. You should now be able to visit web pages again without getting an error.
+Now, go back to your ```/etc/httpd/conf.d/mod_security.conf```, change the SecRuleEngine back to ```On```, and then restart Apache. You should now be able to visit web pages again without getting an error.
 
 This wraps up Lab 5. ModSecurity is a large tool with many features, but the primary concern is updating your rulesets, and then testing with your website to ensure that you are not getting false positives. Rule sets require a great deal of tweaking, and are an area of constant development.
 
