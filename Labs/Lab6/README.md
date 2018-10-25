@@ -134,7 +134,7 @@ Your page should look something like this:
 
 So far, we've echoed HTML out directly to our user. However, this could very quickly become unsustainable and messy. Instead, we can return whole HTML files using the Flask routing system, in a similar manner to Laravel blade files.
 
-First, create a ```templates``` folder in your ```/var/www/myapp``` folder. Then create a new ```.html``` file with a name of your choice. In this HTML file, put together a basic web page. You can see some ideas at the <a href="https://getbootstrap.com/docs/4.0/examples/">Bootstrap examples page</a>. It should have all the standard elements: ```<head>```, ```<body```, ```<title>```, and should use Bootstrap to make things pretty. The contents of the page can be whatever you want.
+First, create a ```templates``` folder in your ```/var/www/myapp``` folder. Then create a new ```.html``` file with a name of your choice. In this HTML file, put together a basic web page. You can see some ideas at the <a href="https://getbootstrap.com/docs/4.0/examples/">Bootstrap examples page</a>. It should have all the standard elements: ```<head>```, ```<body```, ```<title>```, and should use a couple Bootstrap components to make things pretty. The contents of the page can be whatever you want.
 
 Once you have created your HTML page, create a new route in your Flask ```app.py``` file. Inside the function for the route, we'll return the results of the ```render_template()``` function, which we imported from the Flask Python framework. The syntax of the ```render_template()``` looks like this:
 ```
