@@ -20,7 +20,7 @@ First, create a new template in your templates folder called ```example.html```.
  <html>
   <body>
     {% if rand %}
-      <h1>The random number is: <strong>{{ rand }}</h1>
+      <h1>The random number is: {{ rand }}</h1>
     {% else %}
       <h1>No random number generated.</h1>
     {% endif %}
