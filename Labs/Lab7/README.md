@@ -20,7 +20,7 @@ First, create a new template in your templates folder called ```example.html```.
  <html>
   <body>
     {% if rand %}
-      <h1>The random number is: <strong>{{ rand }}</h1>
+      <h1>The random number is: {{ rand }}</h1>
     {% else %}
       <h1>No random number generated.</h1>
     {% endif %}
@@ -70,10 +70,10 @@ Oftentimes, we may want to use a dynamic route - a route that has a dynamic port
 
 Open up your application file and define a new route called ```routes/<var>```, with a route declaration and function that looks like this:
 ```
-@MyApp.route('routes/<var>')
+@MyApp.route('/routes/<var>')
 def routesFunc(var=None):
 ```
-In this case, the route will accept ```routes/<Any string here>```, and then pass that string into the function with the name ```var```. By default, the value will be ```None```, which will cover the case of the user not providing the string. In this case, just make the function convert the string to uppercase and then return it to the user.
+In this case, the route will accept ```/routes/<Any string here>```, and then pass that string into the function with the name ```var```. By default, the value will be ```None```, which will cover the case of the user not providing the string. In this case, just make the function convert the string to uppercase and then return it to the user.
 
 You can check for multiple values within the route URL by simply adding additional variables and passing them to the function:
 ```
