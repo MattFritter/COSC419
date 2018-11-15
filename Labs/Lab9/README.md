@@ -10,7 +10,7 @@ In this lab, we'll explore using Docker to create a deployable image of our web 
 - [Using the Docker Repository](#registry)
 
 <a name="install"></a>
-## Installing Docker (1 marks)
+## Installing Docker (2 marks)
 
 First, we'll need to install Docker on our server. We'll begin by installing dependencies first:
 
