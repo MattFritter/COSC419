@@ -95,7 +95,7 @@ Once you've done that, you can then push your new Docker image to the online rep
 
 When the command is finished running, check the repository website and verify that your image is now available online. You can double-check this by running the following command:
 
-```sudo docker pull <dockerusername>/dockertest:new```
+```sudo docker pull <dockerusername>/cosc419lab9:new```
 
 This will attempt to pull the image, but since we already have an identical copy, will instead return that the image is up to date.
 
