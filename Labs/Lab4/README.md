@@ -13,7 +13,7 @@ In this lab, we'll be exploring ways of securing our web application against XSS
 
 Presently, our server is returning detailed information about our web stack, including the Apache and PHP versions currently used, and the underlying operating system. Giving away this data makes it easier for bad actors to identify potential attacks based on version-specific and software-specific vulnerabilities.
 
-You can view the HTTP headers that your server returns using the Inspect tool in your browser, then selecting the "Network" tab. Click your IP resource and then select the 'Headers' subtab to show your Response Headers. Alternatively, you can use the <a href="http://www.webconfs.com/http-header-check.php">Webconfs HTTP Header Check tool</a>. Your headers should look similar to the following image:
+You can view the HTTP headers that your server returns using the Inspect tool in your browser, then selecting the "Network" tab. Click your IP resource and then select the 'Headers' subtab to show your Response Headers. Alternatively, you can use the <a href="http://www.rexswain.com/httpview.html">Rex Swain's HTTP Viewer</a>. Your headers should look similar to the following image:
 
 <img src="https://i.imgur.com/fJcP2hC.png" width="80%"/>
 
