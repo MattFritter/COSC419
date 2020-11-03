@@ -1,5 +1,5 @@
 # COSC 419: Topics in Computer Science
-# Fall 2020 - Lab 4
+# Fall 2020 - Lab 7
 
 In this lab, we'll be exploring ways of securing our web application against XSS and SQLi attacks and hiding server information using HTTP headers.
 
