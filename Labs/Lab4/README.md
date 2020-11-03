@@ -1,5 +1,5 @@
 # COSC 419: Topics in Computer Science
-# Fall 2018 - Lab 4
+# Fall 2020 - Lab 4
 
 In this lab, we'll be exploring ways of securing our web application against XSS and SQLi attacks and hiding server information using HTTP headers.
 
@@ -81,7 +81,7 @@ Use these errors as a guide for how to write your CSP, such that you allow resou
 
 1. You'll need to approve 'self', 'unsafe-inline', stackpath.boostrapcdn.com, and fonts.googleapis.com as sources in your style-src
 2. You'll need to approve 'self', cdnjs.cloudflare.com, code.jquery.com, and stackpath.bootstrapcdn.com as sources for script-src
-3. You'll need to approve 'self' and fonts.gstatic.com as sources for font-src
+3. You'll need to approve 'self', 'unsafe-inline', and fonts.gstatic.com as sources for font-src
 
 The format for a Content Security Policy is as follows:
 
@@ -96,8 +96,6 @@ Here's an example with some domain sources included to get you started:
 	
 Once you think you're CSP is complete, save and close it, and restart your Apache server. If this was successful, your homepage should load normally, and you shouldn't have any errors in your browser console logs.
 
-However, if you attempt to go to a chatroom, you'll notice that it doesn't function properly, and your browser console log will have an error informing you that it has stopped the execution of the inline JavaScript that underpins the chat ability. For the purposes of this lab, we won't worry about that. We could re-enable the JavaScript by adding 'unsafe-inline' to our script-src declaration in the CSP, but that would completely undermine the point of us implementing the CSP: to stop XSS attacks by preventing inline JS and externally-source, untrusted JS from executing.
-
 As a final step, we'll enable the client-side XSS filtering. Although this is usually unnecessary, it can't hurt, and could provide additional protection against reflected XSS attacks.
 
 Add one more HTTP header with a name of ```X-XSS-Protection``` and a value of ```1, mode=block```. This will automatically block pages which the browser detects may contain a reflected XSS error. Restart Apache to enable your changes.
@@ -105,24 +103,25 @@ Add one more HTTP header with a name of ```X-XSS-Protection``` and a value of ``
 If you want to read more about Content Security Policies, the Mozilla Developer Network (MDN) documentation is excellent, available <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP">here</a>.
 
 <a name="server-side"></a>
-## Server-Side XSS & SQLi Protection (4 marks)
+## Server-Side XSS & SQLi Protection with Validation (4 marks)
 
-If you followed the directions in labs 2 and 3 properly, your queries should be safe from SQL injection (because you're using QueryBuilder), and your pages should be safe from XSS vulnerabilities (because you're always filtering user input with htmlspecialchars() or using the safe {{ }} echo... you are doing that, right?). Answer the following questions to show your understanding of the these vulnerabilities. Save your answers as a .txt file and upload it to your public folder (```/var/www/cosc419/public```) on your webserver.
+Now, let's go ahead and do some server-side validation of data to provide some **real** security. We'll do this using Laravel's ```validate()``` function in some new middleware that we'll create. To begin, we can create a new middleware file with PHP artisan:
 
-1. Briefly describe the differences between a Persistent and Reflected XSS attack.
-2. Why might a Reflected XSS attack be particularly dangerous? Consider how a user may encounter a Reflected XSS attack.
-3. Obscurity should not be mistaken for security, but camouflage and minimizing data leakage are considered valid pieces of a security strategy. Why?
-4. Consider the following SQL query:
+	php artisan make:middleware validateRoomName
 
-	```SELECT * FROM data WHERE id = '$var' AND name = 'TestProduct' LIMIT 1;```
-	
-   Provide a potential SQL injection for $var that would return all records in the data table. How could this SQL injection be prevented?
+This will create a new middleware file in your Laravel ```app/Http/Middleware``` folder. Go ahead and open the new ```validateRoomName.php``` file. Inside, you can define a new middleware function inside ```handle()```. Your middleware file should be applioed to the POST route for the ```/create``` URI. This middleware should validate the incoming request from the client, which contains the ```roomName``` POST parameter specifying the name for a new chatroom.
 
+Using the lecture slides from last lecture, combined with the documentation on available validation types in <a href="https://laravel.com/docs/8.x/validation#available-validation-rules">Laravel available here</a>, create a validation that requires that the room name must be:
 
+1. Required
+2. a String type
+3. a max length of 100 characters
+4. a min length of 5 characters
 
+Remember, you can use the pipe character, ```|```, to combine multiple validation rules together. To help you get started, here's an example of a simple validation middleware that checks ```myVar```, making it ```required``` and also having a max length of 10. Note that we can rely on the ```validate()``` function to redirect the user for us if the validation fails - we don't have to actually do anything with it:
 
+<img src="https://i.imgur.com/JTAQs7l.png" width="60%"/>
 
+Don't forget to register your middleware in your ```Kernel.php``` file, following the directions from the lecture notes. The Kernel file can be found in your Laravel ```app/Http``` folder. Once you've registered your middleware, apply it to your ```/create``` route using the ```middleware()``` function. Restart your server, and verify that it kicks you back to the main landing page if you try to enter a chatroom name that falls outside the allowed validation (i.e. is too long, or too short).
 
-
-
-
+There is no submission required for this lab. You will be graded based on the state of your server. This lab is worth a total of 9 marks - three marks each for correctly implementing the changes to your HTTP headers, creating a working Content Security Policy, and creating a working validation middleware for your chatroom names.
