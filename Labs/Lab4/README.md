@@ -19,7 +19,7 @@ You can view the HTTP headers that your server returns using the Inspect tool in
 
 Specifically, we want to eliminate the Server and X-Powered-By headers, as they return detailed information about our system. We'll begin with the X-Powered-By header. This header is added by PHP itself, and is configurable through your ```/etc/php.ini``` file.
 
-Open this file in a text editor of your choice, and find the line that says ```expose_php = On```, and edit it to ```expose_php = Off```. Save and close the file, then restart the server using ```service httpd restart```. When the server comes back online, check your HTTP headers again. The X-Powered-By header should no longer be included in the response.
+Open this file in a text editor of your choice, and find the line that says ```expose_php = On```, and edit it to ```expose_php = Off```. Save and close the file, then restart the server using ```service httpd restart```. When the server comes back online, check your HTTP headers again. The X-Powered-By header should no longer be included in the response. If this doesn't work, you may need to give your server a hard restart to get it to re-read the PHP.ini file. You can do this with ```reboot```, but you'll need to reconnect afterwards. If you do reboot your server, double check that SELINUX is set to ```permissive``` mode when it comes back (see lab 1 document for how to do this).
 
 The Server HTTP header is more difficult to deal with. By default, Apache will not let you remove it or overwrite it completely - it will only let you remove detailed version and system information, but continue to display that it is an Apache-based server. In order to change it's value, we'll need to install the ```mod_security``` package. Use the following commands to install the package:
 
@@ -30,7 +30,13 @@ Note that the mod_security package is an all-in-one security package that can do
 
 Open ```/etc/httpd/conf.d/mod_security.conf``` in a text editor of your choice, and add the line ```SecServerSignature "Your Text Here"``` to the top, just inside the ```<IfModule mod_security2.c>``` statement. This will replace the Server header contents with the specified text. You may use any text you want, but a relatively common tactic is to use a signature from an unrelated server, such as ```Microsoft-IIS/5.0```. Close and save the file, then restart Apache.
 
-If you've followed these steps, your HTTP headers should now look like this. Note that we are no longer exposing any information about internal software components or versions, and we've disguised our server as a Microsoft IIS server instead of Apache:
+<img src="https://i.imgur.com/iwVSkzE.png" width="60%">
+
+Try opening your web browser inspector (or use Rex's site), and look at your HTTP headers again. You might notice that you've successfully replaced the ```Apache``` token, but the tokens for ```mod_wsgi``` and ```Python``` are probably still kicking around, even though we're currently serving a PHP website. To fix this and remove those tokens entirely, open up your main Apache config file at ```/etc/httpd/conf/httpd.conf```. Add a line new the top that looks like this:
+
+<img src="https://i.imgur.com/dmLgqvw.png" width="60%"/>
+
+Restart Apache. If you've followed these steps, your HTTP headers should now look like this. Note that we are no longer exposing any information about internal software components or versions, and we've disguised our server as a Microsoft IIS server instead of Apache:
 
 <img src="https://i.imgur.com/MemCYWt.png" width="80%"/>
 
@@ -47,10 +53,6 @@ First, open ```/etc/httpd/conf/httpd.conf``` in the text editor of your choice. 
 	Header always set X-Powered-By ASP.NET
 	
 This will always attach an X-Powered-By header to responses, with a value of "ASP.NET" - an expected response header from a stock IIS server. Then, add two more headers to your response: a header named ```X-AspNet-Version```, with a value of ```4.0.30319``` and a header named ```X-AspNetMvc-Version``` with a value of ```5.2```. 
-
-Finally, we'll add one more line to our ```httpd.conf```:
-
-	ServerSignature Off
 
 This disables the server signature (in our case, Microsoft IIS, but by default, Apache) from being displayed at the bottom of standard Apache error pages (404, 403, 500, etc). Restart your Apache server when you're done.
 
